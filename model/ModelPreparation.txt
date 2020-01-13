@@ -1,0 +1,7 @@
+This file contains the info which can not be retrieved from the visual files or are not so easy to retrived
+
+1)we use a uniform stiffness, not morphogen based
+2)before pressurizing the very iniitial template, we block the lateral cells in the x direction as to simulate the presence of lateral cells. 
+  This also incidentally gives a slight positive curvature to the top layer of the simulation, fact that helps the inner cells to push outwards the epidermis. Also the cells start initially a bit more elongated 
+3)Stiffness based on morphogens is really set to false and after pressurization all the boundary cells are blocked in xyz
+
