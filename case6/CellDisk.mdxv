@@ -1,7 +1,7 @@
 // Parameters for MorphoDynamX
 [Main]
 MDXVersion: 2.0
-MDXRevision: 2-604-gd29c9f0-dirty
+MDXRevision: 2-674-ge6183014
 ClearColor: 0
 SurfOffset: 0.01
 Slices: 500
@@ -71,26 +71,26 @@ Shininess: 32
 Specular: 0.2
 UnsharpStrength: 1
 MaxNbPeels: 10
-CameraFrame: 1 -5.5852e-33 2.62525e-17 0 5.5852e-33 1 -9.10662e-35 0 -2.62525e-17 9.10662e-35 1 0 -3.20949e-15 -8.74576e-32 -960.374 1
+CameraFrame: 1 2.8889e-17 1.23696e-33 0 -2.8889e-17 1 -6.16298e-33 0 -1.23696e-33 6.16298e-33 1 0 73.0666 -53.2785 -960.374 1
 SceneRadius: 500
-CameraZoom: 0
+CameraZoom: -0.8304
 
 
 [Clip1]
 Enable: false
 Grid: false
-Width: 0.663519
+Width: 0.664945
 GridSize: 1
 GridSquares: 3
 GridColor: 11
 Normal: 1 0 0
-Frame: -0.153976 0.899928 0.407947 0 0.98631 0.115325 0.117867 0 0.0590254 0.420511 -0.905365 0 19.9775 -3.93922 3.56009e-33 1
+Frame: -0.153977 0.899928 0.407947 0 0.98631 0.115327 0.117867 0 0.059025 0.420511 -0.905365 0 19.9775 -3.93922 3.56009e-33 1
 
 
 [Clip2]
 Enable: false
 Grid: false
-Width: 0.663519
+Width: 0.664945
 GridSize: 1
 GridSquares: 3
 GridColor: 12
@@ -101,7 +101,7 @@ Frame: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 [Clip3]
 Enable: false
 Grid: false
-Width: 0.663519
+Width: 0.664945
 GridSize: 1
 GridSquares: 3
 GridColor: 13
@@ -112,7 +112,7 @@ Frame: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 [Stack1]
 StackFile: 
 WorkStackFile: 
-MeshFile: regulardGridPolygonizedAssignedPressurized_234567.mdxm
+MeshFile: regulardGridPolygonizedAssigned_23467_Pressurized.mdxm
 MainShow: false
 MainBright:1
 MainOpacity:0.8
@@ -136,7 +136,7 @@ ScaleX:1
 ScaleY:1
 ScaleZ:1
 Scale:1.73205
-LoadMeshScaleUm: false
+LoadMeshScaleUm: true
 LoadMeshTransform: false
 MeshShift: 0
 CCName: Tissue
@@ -188,7 +188,7 @@ DrawCutSurf: false
 Mode: 0
 CutSurfGrid: false
 Material: 0
-Size: 0 0 0
+Size: 0.0982937 0.0982937 0.0982937
 SurfSize: 15 15
 LineWidth: 1
 BezPoints: 5 5
@@ -312,96 +312,6 @@ ParmName: Line Width
 ParmString: 2.0
 ParmName: PCA Attribute
 ParmString: PCA 2D
-ProcessName: Mesh/Contour/Arrange Contours
-NumParms: 4
-ParmName: Width
-ParmString: 2000.0
-ParmName: Spacing
-ParmString: 10.0 10.0
-ParmName: Heat
-ParmString: 
-ParmName: Labeling
-ParmString: 
-ProcessName: Mesh/Contour/Create Contours
-NumParms: 8
-ParmName: CC Name In
-ParmString: 
-ParmName: CC Name Out
-ParmString: Contours
-ParmName: Mesh In
-ParmString: Current
-ParmName: Mesh Out
-ParmString: Current
-ParmName: Label Group
-ParmString: Sample
-ParmName: Label Name
-ParmString: Sample 1
-ParmName: Clear CC
-ParmString: No
-ParmName: Relabel
-ParmString: Yes
-ProcessName: Mesh/Contour/Create LEC
-NumParms: 2
-ParmName: LEC Name
-ParmString: 
-ParmName: Circle Points
-ParmString: 20
-ProcessName: Mesh/Contour/Load Contours
-NumParms: 3
-ParmName: Directory
-ParmString: Contours
-ParmName: File Pattern
-ParmString: *.txt
-ParmName: CC Name
-ParmString: Contour
-ProcessName: Mesh/Contour/Rotate Min Axis
-NumParms: 1
-ParmName: Min Axis
-ParmString: Yes
-ProcessName: Mesh/Contour/Select Bad Contours
-NumParms: 0
-ProcessName: Mesh/Contour/Select by Percentile
-NumParms: 3
-ParmName: Labeling
-ParmString: Species
-ParmName: Percentile
-ParmString: 85.0
-ParmName: Select Vertices
-ParmString: Yes
-ProcessName: Mesh/Contour/Trim Contours
-NumParms: 0
-ProcessName: Mesh/Contour/Vofely Load Contours
-NumParms: 15
-ParmName: Cell Directory
-ParmString: Contours
-ParmName: Cell File Pattern
-ParmString: *.txt
-ParmName: Cell CC Name
-ParmString: Cell Contours
-ParmName: Cell Id Col
-ParmString: Sample_Number
-ParmName: Leaf Directory
-ParmString: Contours
-ParmName: Leaf File Pattern
-ParmString: *.ply
-ParmName: Leaf CC Name
-ParmString: Leaf Contours
-ParmName: Leaf Id Col
-ParmString: Sample
-ParmName: Scale Col
-ParmString: Scale
-ParmName: Clade Col
-ParmString: Clade
-ParmName: Species Col
-ParmString: Species
-ParmName: Side Col
-ParmString: Side
-ParmName: Species Id Col
-ParmString: Species Id
-ParmName: CSV File Name
-ParmString: VofelyMetadata.csv
-ParmName: CSV Attribute
-ParmString: Vofely
 ProcessName: Mesh/Creation/Extrude Faces
 NumParms: 2
 ParmName: Complex Name Out
@@ -448,114 +358,18 @@ ParmName: Range Max
 ParmString: 1.0
 ParmName: Heat Map
 ParmString: 
-ProcessName: Mesh/Heat Map/Measures2D/Contour/Area
-NumParms: 3
-ParmName: Heat Name
-ParmString: Area
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
-ProcessName: Mesh/Heat Map/Measures2D/Contour/Aspect Ratio
-NumParms: 3
-ParmName: Heat Name
-ParmString: Aspect Ratio
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
-ProcessName: Mesh/Heat Map/Measures2D/Contour/Circularity
-NumParms: 3
-ParmName: Heat Name
-ParmString: Circularity
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
-ProcessName: Mesh/Heat Map/Measures2D/Contour/Convexity
-NumParms: 3
-ParmName: Heat Name
-ParmString: Lobeyness
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
-ProcessName: Mesh/Heat Map/Measures2D/Contour/InVisibility
-NumParms: 3
-ParmName: Heat Name
-ParmString: InVisibility
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
-ProcessName: Mesh/Heat Map/Measures2D/Contour/LEC
-NumParms: 3
-ParmName: Heat Name
-ParmString: LEC
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
-ProcessName: Mesh/Heat Map/Measures2D/Contour/Lobeyness
-NumParms: 3
-ParmName: Heat Name
-ParmString: Lobeyness
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
-ProcessName: Mesh/Heat Map/Measures2D/Contour/Max Axis
-NumParms: 3
-ParmName: Heat Name
-ParmString: Max Axis
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
-ProcessName: Mesh/Heat Map/Measures2D/Contour/Min Axis
-NumParms: 3
-ParmName: Heat Name
-ParmString: Min Axis
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
-ProcessName: Mesh/Heat Map/Measures2D/Contour/Min Rectangle
-NumParms: 3
-ParmName: Heat Name
-ParmString: Min Rectangle
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
-ProcessName: Mesh/Heat Map/Measures2D/Contour/Rectangularity
-NumParms: 3
-ParmName: Heat Name
-ParmString: Rectangularity
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
-ProcessName: Mesh/Heat Map/Measures2D/Contour/Solidity
-NumParms: 3
-ParmName: Heat Name
-ParmString: Solidity
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
-ProcessName: Mesh/Heat Map/Measures2D/Contour/Visibility
-NumParms: 3
-ParmName: Heat Name
-ParmString: Visibility
-ParmName: Smooth Passes
-ParmString: 0
-ParmName: Smooth Amount
-ParmString: 0.1
 ProcessName: Mesh/Heat Map/Measures2D/Geometry/Area
 NumParms: 1
 ParmName: Heat Name
 ParmString: Area
+ProcessName: Mesh/Heat Map/Measures2D/Geometry/Junction Distance
+NumParms: 3
+ParmName: Heat Name
+ParmString: Junction Distance
+ParmName: Mode
+ParmString: Min
+ParmName: Only Direct Junctions
+ParmString: No
 ProcessName: Mesh/Heat Map/Measures2D/Geometry/Neighbors
 NumParms: 1
 ParmName: Heat Name
@@ -699,7 +513,7 @@ ParmString: 2
 ParmName: Border Size
 ParmString: 1.0
 ProcessName: Mesh/Heat Map/Tools/Heat Map Save
-NumParms: 4
+NumParms: 5
 ParmName: Heat Name
 ParmString: 
 ParmName: Labeling
@@ -707,6 +521,8 @@ ParmString:
 ParmName: File Name
 ParmString: 
 ParmName: Use Selection
+ParmString: No
+ParmName: Export Labelings
 ParmString: No
 ProcessName: Mesh/Heat Map/Tools/Heat Map Scale
 NumParms: 2
@@ -866,6 +682,8 @@ ParmName: Label Name
 ParmString: 
 ProcessName: Mesh/Segmentation/Vertex Labels From Faces
 NumParms: 0
+ProcessName: Mesh/Segmentation/Vertex Labels From Volumes
+NumParms: 0
 ProcessName: Mesh/Segmentation/Watershed Segmentation
 NumParms: 3
 ParmName: Steps
@@ -954,6 +772,12 @@ ParmName: Signal 2
 ParmString: 
 ParmName: Operation
 ParmString: Addition
+ProcessName: Mesh/Signal/Delete Signal
+NumParms: 2
+ParmName: Signal Name
+ParmString: 
+ParmName: Mesh Id
+ParmString: 
 ProcessName: Mesh/Signal/Difference of Gaussians
 NumParms: 3
 ParmName: Radius 1
@@ -1036,6 +860,12 @@ ParmName: Max Signal
 ParmString: 60000.0
 ParmName: Signal
 ParmString: 
+ProcessName: Mesh/Signal/Rename Signal
+NumParms: 2
+ParmName: Signal Name
+ParmString: 
+ParmName: Mesh Id
+ParmString: 
 ProcessName: Mesh/Signal/Rescale Signal
 NumParms: 5
 ParmName: Zero Ref
@@ -1048,12 +878,6 @@ ParmName: Maximum
 ParmString: 1.0
 ParmName: Signal
 ParmString: 
-ProcessName: Mesh/Signal/Scale Signals
-NumParms: 2
-ParmName: Signal
-ParmString: 
-ParmName: Operation
-ParmString: Inverse
 ProcessName: Mesh/Signal/Set Mesh Signal
 NumParms: 3
 ParmName: Value
@@ -1072,6 +896,12 @@ ParmName: Passes
 ParmString: 3
 ParmName: Signal
 ParmString: 
+ProcessName: Mesh/Signal/Transform Signal
+NumParms: 2
+ParmName: Signal
+ParmString: 
+ParmName: Operation
+ParmString: Invert
 ProcessName: Mesh/Signal/Trim Signal
 NumParms: 2
 ParmName: Lower Threshold
@@ -1285,11 +1115,11 @@ ParmString: 50
 ParmName: Max Mass Spring Iterations
 ParmString: 50
 ParmName: Simulation time to save mesh
-ParmString: 50, 100, 160
+ParmString: 50, 100, 150, 160, 180, 190
 ParmName: Save Mesh Process Name
 ParmString: Mesh/System/Save
 ParmName: Name of mesh
-ParmString: OvuleCell2DGrowth_234567_stiffUniform1000
+ParmString: OvuleCell2DGrowth_MS-Case6
 ParmName: Self Stop Time
 ParmString: 200
 ProcessName: Model/Cell Ovule Growth/10 Growth Signal/a Set Cell Type/Assign
@@ -1427,7 +1257,7 @@ ParmString: 100
 ParmName: Wall Stiffness based on morphogen
 ParmString: True
 ParmName: Wall Stiffness Max
-ParmString: 200
+ParmString: 500
 ParmName: Wall Stiffness Min
 ParmString: 100
 ParmName: Proportionality type
@@ -1579,7 +1409,7 @@ ParmString: Tissue
 ParmName: Tissue Dual
 ParmString: TissueDual
 ProcessName: Model/Cell Ovule Growth/40 Cell Tissue/b Divide Cells
-NumParms: 9
+NumParms: 10
 ParmName: Cell Max Area
 ParmString: 63
 ParmName: Cell Wall Min
@@ -1590,6 +1420,8 @@ ParmName: Cell Pinch
 ParmString: 0.1
 ParmName: Cell Max Pinch
 ParmString: 0.1
+ParmName: Noise
+ParmString: 1
 ParmName: Verbose
 ParmString: No
 ParmName: Selective propagation
@@ -1934,6 +1766,76 @@ ParmName: Low Threshold
 ParmString: 1000
 ParmName: High Threshold
 ParmString: 0
+ProcessName: Stack/ITK/Filters/ITK Curvature Anisotropic Diffusion Image Filter
+NumParms: 3
+ParmName: Time Step
+ParmString: 0.03
+ParmName: Iterations
+ParmString: 5
+ParmName: Conductance
+ParmString: 9.0
+ProcessName: Stack/ITK/Filters/ITK Curvature Flow Image Filter
+NumParms: 2
+ParmName: Time Step
+ParmString: .0.0625
+ParmName: Steps
+ParmString: 10
+ProcessName: Stack/ITK/Filters/ITK Gradient Magnitude Recursive Gaussian Image Filter
+NumParms: 1
+ParmName: Sigma
+ParmString: 0.5
+ProcessName: Stack/ITK/Filters/ITK Sigmoid Image Filter
+NumParms: 2
+ParmName: Alpha
+ParmString: 1000.0
+ParmName: Beta
+ParmString: 2000.0
+ProcessName: Stack/ITK/Filters/ITK Smoothing Recursive Gaussian Image Filter
+NumParms: 1
+ParmName: Radius
+ParmString: 1.0
+ProcessName: Stack/ITK/Registration/ITK Demons Registration
+NumParms: 6
+ParmName: Deformation File
+ParmString: deformation.vtk
+ParmName: Threshold at Mean
+ParmString: Yes
+ParmName: Histogram Levels
+ParmString: 1024
+ParmName: Match Points
+ParmString: 7
+ParmName: Iterations
+ParmString: 150
+ParmName: Sigma
+ParmString: 1.0
+ProcessName: Stack/ITK/Segmentation/ITK Watershed
+NumParms: 2
+ParmName: Fully Connected
+ParmString: No
+ParmName: Mark Watershed Line
+ParmString: No
+ProcessName: Stack/ITK/Segmentation/ITK Watershed Auto Seeded
+NumParms: 3
+ParmName: Fully Connected
+ParmString: No
+ParmName: Mark Watershed Line
+ParmString: No
+ParmName: Level
+ParmString: 1500
+ProcessName: Stack/ITK/System/ITK Image Reader
+NumParms: 4
+ParmName: File Name
+ParmString: 
+ParmName: Reader
+ParmString: SCIFIO
+ParmName: Store
+ParmString: Main
+ParmName: Stack Number
+ParmString: 0
+ProcessName: Stack/ITK/System/ITK VTK Writer
+NumParms: 1
+ParmName: File Name
+ParmString: 
 ProcessName: Stack/Mesh Interaction/Annihilate
 NumParms: 4
 ParmName: Fill
@@ -2010,6 +1912,10 @@ ParmName: Adapt Factor
 ParmString: 0.3
 ParmName: Fill Value
 ParmString: 30000
+ProcessName: Stack/Morphology/Edge Detect Angle
+NumParms: 1
+ParmName: Fill Holes
+ParmString: No
 ProcessName: Stack/Morphology/Erode
 NumParms: 5
 ParmName: X Radius
@@ -2114,6 +2020,12 @@ ParmName: Start Label
 ParmString: 2
 ParmName: Min Color
 ParmString: 10000
+ProcessName: Stack/Segmentation/Relabel
+NumParms: 2
+ParmName: Start Label
+ParmString: 1
+ParmName: Step
+ParmString: 1
 ProcessName: Stack/Segmentation/Watershed3D
 NumParms: 0
 ProcessName: Stack/System/Clear Main Stack
@@ -2672,6 +2584,36 @@ ParmName: Oversampling
 ParmString: 1.0
 ParmName: Quality
 ParmString: 95
+ProcessName: Tools/Tesselate/TetGen
+NumParms: 7
+ParmName: Input Complex
+ParmString: 
+ParmName: Output Complex
+ParmString: 
+ParmName: Radius-Edge Ratio
+ParmString: 
+ParmName: Dihedral Angle
+ParmString: 
+ParmName: Maximum Size
+ParmString: 
+ParmName: Additional Arguments
+ParmString: 
+ParmName: Extend Selection
+ParmString: No
+ProcessName: Tools/Tesselate/Triangle
+NumParms: 6
+ParmName: Input Complex
+ParmString: 
+ParmName: Output Complex
+ParmString: 
+ParmName: Projection
+ParmString: Best Fit
+ParmName: Minimum Angle
+ParmString: 
+ParmName: Maximum Size
+ParmString: 
+ParmName: Additional Arguments
+ParmString: 
 ProcessName: Tools/Transform/Save Global Transform
 NumParms: 1
 ParmName: File Name

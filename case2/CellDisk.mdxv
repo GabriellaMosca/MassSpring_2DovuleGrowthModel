@@ -1,7 +1,7 @@
 // Parameters for MorphoDynamX
 [Main]
 MDXVersion: 2.0
-MDXRevision: 2-672-gb342f639
+MDXRevision: 2-674-ge6183014
 ClearColor: 0
 SurfOffset: 0.01
 Slices: 500
@@ -71,7 +71,7 @@ Shininess: 32
 Specular: 0.2
 UnsharpStrength: 1
 MaxNbPeels: 10
-CameraFrame: 1 -1.26861e-16 -5.55112e-17 0 1.26861e-16 1 -6.60257e-33 0 5.55112e-17 -4.39599e-34 1 0 76.7467 -51.0792 -960.374 1
+CameraFrame: 1 -1.26861e-16 -5.55112e-17 0 1.26861e-16 1 -6.60259e-33 0 5.55112e-17 -4.39618e-34 1 0 76.7467 -51.0792 -960.374 1
 SceneRadius: 500
 CameraZoom: -0.864
 
@@ -79,18 +79,18 @@ CameraZoom: -0.864
 [Clip1]
 Enable: false
 Grid: false
-Width: 0.664945
+Width: 0.665278
 GridSize: 1
 GridSquares: 3
 GridColor: 11
 Normal: 1 0 0
-Frame: -0.151986 0.902177 0.403704 0 0.98679 0.115329 0.113775 0 0.0560866 0.415663 -0.907788 0 19.9775 -3.93922 3.56009e-33 1
+Frame: -0.151987 0.902177 0.403704 0 0.98679 0.115329 0.113775 0 0.0560865 0.415663 -0.907788 0 19.9775 -3.93922 3.56009e-33 1
 
 
 [Clip2]
 Enable: false
 Grid: false
-Width: 0.664945
+Width: 0.665278
 GridSize: 1
 GridSquares: 3
 GridColor: 12
@@ -101,7 +101,7 @@ Frame: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 [Clip3]
 Enable: false
 Grid: false
-Width: 0.664945
+Width: 0.665278
 GridSize: 1
 GridSquares: 3
 GridColor: 13
@@ -188,7 +188,7 @@ DrawCutSurf: false
 Mode: 0
 CutSurfGrid: false
 Material: 0
-Size: 0 0 0
+Size: 0.0982937 0.0982937 0.0982937
 SurfSize: 15 15
 LineWidth: 1
 BezPoints: 5 5
@@ -1115,11 +1115,11 @@ ParmString: 50
 ParmName: Max Mass Spring Iterations
 ParmString: 50
 ParmName: Simulation time to save mesh
-ParmString: 190
+ParmString: 50, 89, 160, 170, 190
 ParmName: Save Mesh Process Name
 ParmString: Mesh/System/Save
 ParmName: Name of mesh
-ParmString: OvuleCell2DGrowth_234567_stiffUniform100
+ParmString: OvuleCell2DGrowth_MS-Case2
 ParmName: Self Stop Time
 ParmString: 200
 ProcessName: Model/Cell Ovule Growth/10 Growth Signal/a Set Cell Type/Assign

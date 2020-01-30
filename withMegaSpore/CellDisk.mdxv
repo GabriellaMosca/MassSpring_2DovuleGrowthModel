@@ -71,7 +71,7 @@ Shininess: 32
 Specular: 0.2
 UnsharpStrength: 1
 MaxNbPeels: 10
-CameraFrame: 1 -1.26861e-16 -5.55112e-17 0 1.26861e-16 1 -6.60259e-33 0 5.55112e-17 -4.39618e-34 1 0 76.7467 -51.0792 -960.374 1
+CameraFrame: 1 -1.26861e-16 -5.55112e-17 0 1.26861e-16 1 -6.60259e-33 0 5.55112e-17 -4.39617e-34 1 0 76.7467 -51.0792 -960.374 1
 SceneRadius: 500
 CameraZoom: -0.864
 
@@ -79,18 +79,18 @@ CameraZoom: -0.864
 [Clip1]
 Enable: false
 Grid: false
-Width: 0.665278
+Width: 0.666276
 GridSize: 1
 GridSquares: 3
 GridColor: 11
 Normal: 1 0 0
-Frame: -0.151987 0.902177 0.403704 0 0.98679 0.115329 0.113775 0 0.0560865 0.415663 -0.907788 0 19.9775 -3.93922 3.56009e-33 1
+Frame: -0.151988 0.902178 0.403701 0 0.98679 0.115329 0.113778 0 0.0560895 0.415661 -0.907789 0 19.9775 -3.93922 3.56009e-33 1
 
 
 [Clip2]
 Enable: false
 Grid: false
-Width: 0.665278
+Width: 0.666276
 GridSize: 1
 GridSquares: 3
 GridColor: 12
@@ -101,7 +101,7 @@ Frame: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 [Clip3]
 Enable: false
 Grid: false
-Width: 0.665278
+Width: 0.666276
 GridSize: 1
 GridSquares: 3
 GridColor: 13
@@ -188,7 +188,7 @@ DrawCutSurf: false
 Mode: 0
 CutSurfGrid: false
 Material: 0
-Size: 0 0 0
+Size: 0.0982937 0.0982937 0.0982937
 SurfSize: 15 15
 LineWidth: 1
 BezPoints: 5 5
@@ -1115,13 +1115,13 @@ ParmString: 50
 ParmName: Max Mass Spring Iterations
 ParmString: 50
 ParmName: Simulation time to save mesh
-ParmString: 190
+ParmString: 80
 ParmName: Save Mesh Process Name
 ParmString: Mesh/System/Save
 ParmName: Name of mesh
-ParmString: OvuleCell2DGrowth_234567_stiffUniform100
+ParmString: OvuleCell2DGrowth_MS-MMC_notdividingFromTme110
 ParmName: Self Stop Time
-ParmString: 200
+ParmString: 81
 ProcessName: Model/Cell Ovule Growth/10 Growth Signal/a Set Cell Type/Assign
 NumParms: 4
 ParmName: Cell Type

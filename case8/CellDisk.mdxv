@@ -1,7 +1,7 @@
 // Parameters for MorphoDynamX
 [Main]
 MDXVersion: 2.0
-MDXRevision: 2-672-gb342f639
+MDXRevision: 2-674-ge6183014
 ClearColor: 0
 SurfOffset: 0.01
 Slices: 500
@@ -79,7 +79,7 @@ CameraZoom: -0.672
 [Clip1]
 Enable: false
 Grid: false
-Width: 0.664945
+Width: 0.665943
 GridSize: 1
 GridSquares: 3
 GridColor: 11
@@ -90,7 +90,7 @@ Frame: 0.986852 -0.0536119 -0.152473 0 0.0572142 0.998175 0.0193343 0 0.151159 -
 [Clip2]
 Enable: false
 Grid: false
-Width: 0.664945
+Width: 0.665943
 GridSize: 1
 GridSquares: 3
 GridColor: 12
@@ -101,7 +101,7 @@ Frame: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 [Clip3]
 Enable: false
 Grid: false
-Width: 0.664945
+Width: 0.665943
 GridSize: 1
 GridSquares: 3
 GridColor: 13
@@ -1119,7 +1119,7 @@ ParmString: 50, 100, 160, 350
 ParmName: Save Mesh Process Name
 ParmString: Mesh/System/Save
 ParmName: Name of mesh
-ParmString: OvuleCell2DGrowth_234567_stiffUniform1000
+ParmString: OvuleCell2DGrowth_MS-Case8
 ParmName: Self Stop Time
 ParmString: 351
 ProcessName: Model/Cell Ovule Growth/10 Growth Signal/a Set Cell Type/Assign

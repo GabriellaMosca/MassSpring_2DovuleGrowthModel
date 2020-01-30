@@ -71,26 +71,26 @@ Shininess: 32
 Specular: 0.2
 UnsharpStrength: 1
 MaxNbPeels: 10
-CameraFrame: 1 -2.51074e-32 -4.24779e-17 0 1.80334e-32 1 -1.66533e-16 0 4.24779e-17 1.66533e-16 1 0 76.7467 -51.0792 -960.374 1
+CameraFrame: 0.999995 0.000124395 0.00319128 0 -0.000124365 1 -9.55838e-06 0 -0.00319128 9.16145e-06 0.999995 0 -2.37936 -27.0382 -481.476 1
 SceneRadius: 500
-CameraZoom: -0.864
+CameraZoom: -0.192
 
 
 [Clip1]
 Enable: false
 Grid: false
-Width: 0.668947
+Width: 0.653431
 GridSize: 1
 GridSquares: 3
 GridColor: 11
 Normal: 1 0 0
-Frame: -0.162938 0.900265 0.403701 0 0.985315 0.127311 0.113778 0 0.0510349 0.416311 -0.907789 0 20.0239 -3.69621 6.14515e-17 1
+Frame: 1 0 0 0 0 1 0 0 0 0 1 0 41.3932 1.16273 2.29779e-15 1
 
 
 [Clip2]
 Enable: false
 Grid: false
-Width: 0.668947
+Width: 0.653431
 GridSize: 1
 GridSquares: 3
 GridColor: 12
@@ -101,7 +101,7 @@ Frame: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 [Clip3]
 Enable: false
 Grid: false
-Width: 0.668947
+Width: 0.653431
 GridSize: 1
 GridSquares: 3
 GridColor: 13
@@ -112,7 +112,7 @@ Frame: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 [Stack1]
 StackFile: 
 WorkStackFile: 
-MeshFile: regulardGridPolygonizedAssignedPressurized_L1OnlyStrainBased.mdxm
+MeshFile: mesh-2018_2404_275aSegmentedMeshMergingSplittingNonGrowingPoligonizedAssignedPressurized_latest.mdxm
 MainShow: false
 MainBright:1
 MainOpacity:0.8
@@ -179,7 +179,7 @@ MeshShift: 0
 CCName: 
 MainColorMap: Interpolation:\srgb\nClamp:\strue\nExteriorColor:\s0,0,0,0\nColoredPos:\s0-0,0,0,0\nColoredPos:\s1-1,0,0,1\n
 WorkColorMap: Interpolation:\srgb\nClamp:\strue\nExteriorColor:\s0,0,0,0\nColoredPos:\s0-0,0,0,0\nColoredPos:\s1-1,1,0,1\n
-Frame: 1 0 0 0 0 1 0 0 0 0 1 0 158.413 -3.55271e-15 1.61982e-32 1
+Frame: 1 0 0 0 0 1 0 0 0 0 1 0 227.663 6.0462 2.52756e-14 1
 Trans: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 
 
@@ -228,21 +228,21 @@ AutoUnit: true
 Position: BottomRight
 Direction: Horizontal
 TextPosition: Out
-Thickness: 8
+Thickness: 5
 ShiftBorder: 20 20
-FontSize: 18
+FontSize: 12
 
 [ColorBar]
 ScaleLength: 0.3
-Width: 30
+Width: 20
 DistanceToBorder: 5
 TextToBar: 5
-TickSize: 4
+TickSize: 2
 ExpSize: 0.7
 Epsilon: 1e-09
 LineWidth: 2
 Position: TopLeft
-FontSize: 18
+FontSize: 10
 Orientation: Vertical
 
 [Process]
@@ -949,15 +949,15 @@ NumParms: 4
 ParmName: Translation
 ParmString: 0.0 0.0 0.0
 ParmName: Rotation Axis
-ParmString: 1.0 0.0 0.0
+ParmString: 0 0 1
 ParmName: Angle
-ParmString: 0.0
+ParmString: -5
 ParmName: Scale
-ParmString: 0.2
+ParmString: 1
 ProcessName: Mesh/System/Delete Cell Complex
 NumParms: 1
 ParmName: Cell Complex Name
-ParmString: TissueDual
+ParmString: MeshMGXM
 ProcessName: Mesh/System/Delete Selection
 NumParms: 1
 ParmName: Delete Dangling Cells
@@ -987,7 +987,7 @@ ParmString: No
 ProcessName: Mesh/System/Load
 NumParms: 4
 ParmName: File Name
-ParmString: /home/gabriella/Desktop/IMAGO_DATA/ovule2Dsimulations_parameterExploration/veryFinaleSetPaper/case_234567/regulardGridPolygonizedAssignedPressurized_234567.mdxm
+ParmString: /home/mosca/Desktop/CeliaPostDoc/ovule2Dsimulations/veryFinaleSetPaper/realTemplate/mesh-2018_2404_275aSegmentedMeshMergingSplittingNonGrowingPoligonizedAssignedPressurized_latest.mdxm
 ParmName: Transform
 ParmString: no
 ParmName: Add
@@ -997,7 +997,7 @@ ParmString: 0
 ProcessName: Mesh/System/Rename Cell Complex
 NumParms: 2
 ParmName: Old Name
-ParmString: 
+ParmString: MeshMGXM Polygonized
 ParmName: New Name
 ParmString: 
 ProcessName: Mesh/System/Render
@@ -1069,7 +1069,7 @@ ParmString:
 ProcessName: Mesh/System/Save
 NumParms: 3
 ParmName: File Name
-ParmString: /home/gabriella/Desktop/IMAGO_DATA/ovule2Dsimulations_parameterExploration/veryFinaleSetPaper/case_234567/regulardGridPolygonizedAssignedPressurized_234567_L2100_SMC200.mdxm
+ParmString: /home/mosca/Desktop/CeliaPostDoc/ovule2Dsimulations/veryFinaleSetPaper/realTemplate/mesh-2018_2404_275aSegmentedMeshMergingSplittingNonGrowingPoligonizedAssignedPressurized_latest.mdxm
 ParmName: Transform
 ParmString: no
 ParmName: Mesh Id
@@ -1115,19 +1115,19 @@ ParmString: 50
 ParmName: Max Mass Spring Iterations
 ParmString: 50
 ParmName: Simulation time to save mesh
-ParmString: 267, 268
+ParmString: 159
 ParmName: Save Mesh Process Name
 ParmString: Mesh/System/Save
 ParmName: Name of mesh
-ParmString: OvuleCell2DGrowth_L1OnlyStrainBasedGr
+ParmString: OvuleCell2DGrowthRealTemplate_MMC_100_L150
 ParmName: Self Stop Time
-ParmString: 400
+ParmString: 160
 ProcessName: Model/Cell Ovule Growth/10 Growth Signal/a Set Cell Type/Assign
 NumParms: 4
 ParmName: Cell Type
 ParmString: Ground Cell
 ParmName: Amount
-ParmString: 0.2
+ParmString: 0
 ParmName: Fixed Conc
 ParmString: Yes
 ParmName: Propagate laterally
@@ -1227,27 +1227,27 @@ ParmString: Dirichlet Attribute
 ProcessName: Model/Cell Ovule Growth/20 Mass Spring Mechanics/b Set Cell Type Mechanics and Growth/Assign
 NumParms: 11
 ParmName: Cell Type
-ParmString: L1 Cell
+ParmString: Special Cell
 ParmName: maxArea
-ParmString: 53
+ParmString: 73
 ParmName: Isotropic Growth
 ParmString: False
 ParmName: Parallel Growth to Field
-ParmString: 1
-ParmName: Orthogonal Growth to Field
 ParmString: 0
+ParmName: Orthogonal Growth to Field
+ParmString: 1
 ParmName: Cell Pressure
 ParmString: 0.5
 ParmName: Strain threshold
-ParmString: 0.05
+ParmString: 0.1
 ParmName: Strain based growth rate
 ParmString: 0
 ParmName: Strain based growth rate par to field
-ParmString: 0.5
-ParmName: Strain based growth rate ortho to field
 ParmString: 0
+ParmName: Strain based growth rate ortho to field
+ParmString: 0.1
 ParmName: Special growth rate intensity
-ParmString: 0.0001
+ParmString: 0
 ProcessName: Model/Cell Ovule Growth/20 Mass Spring Mechanics/b Set Cell Type Mechanics and Growth/Reset
 NumParms: 0
 ProcessName: Model/Cell Ovule Growth/20 Mass Spring Mechanics/c Set Wall Stiffness/Assign
@@ -1323,7 +1323,7 @@ ParmString: Model/Cell Ovule Growth/20 Mass Spring Mechanics/e Mass Spring Param
 ProcessName: Model/Cell Ovule Growth/30 Growth Process/a Set Fixed Concentr Diffusion Polarizer/Assign
 NumParms: 1
 ParmName: Concentration
-ParmString: 0
+ParmString: 0.2
 ProcessName: Model/Cell Ovule Growth/30 Growth Process/a Set Fixed Concentr Diffusion Polarizer/Reset
 NumParms: 0
 ProcessName: Model/Cell Ovule Growth/30 Growth Process/b Mass Spring Growth
@@ -1437,11 +1437,11 @@ ParmString: 1000
 ProcessName: Model/Cell Ovule Growth/50 Visualize Assigned Cell Properties
 NumParms: 1
 ParmName: Field to visualize
-ParmString: Growth Rate Strain Parall
+ParmString: Cell Type
 ProcessName: Model/Cell Ovule Growth/60 Visualize Dirichlet
 NumParms: 3
 ParmName: Visualize
-ParmString: XYZ
+ParmString: Y
 ParmName: Cell Complex
 ParmString: Tissue
 ParmName: Dirichlet Attribute
@@ -2227,7 +2227,7 @@ NumParms: 0
 ProcessName: Tools/Cell Maker/Mesh 2D/Tools/Polygonize Triangles
 NumParms: 1
 ParmName: Max Length
-ParmString: -1.0
+ParmString: 3
 ProcessName: Tools/Cell Maker/Mesh 2D/Tools/Rotate Mesh
 NumParms: 1
 ParmName: Angle
@@ -2569,7 +2569,7 @@ NumParms: 0
 ProcessName: Tools/System/Save View
 NumParms: 1
 ParmName: File Name
-ParmString: /home/gabriella/Desktop/IMAGO_DATA/ovule2Dsimulations_parameterExploration/veryFinaleSetPaper/case_234567/CellDisk.mdxv
+ParmString: /home/mosca/Desktop/CeliaPostDoc/ovule2Dsimulations/veryFinaleSetPaper/realTemplate/CellDisk.mdxv
 ProcessName: Tools/System/Snapshot
 NumParms: 6
 ParmName: File Name

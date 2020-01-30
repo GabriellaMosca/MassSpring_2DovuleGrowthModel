@@ -1,7 +1,7 @@
 // Parameters for MorphoDynamX
 [Main]
 MDXVersion: 2.0
-MDXRevision: 2-672-gb342f639
+MDXRevision: 2-674-ge6183014
 ClearColor: 0
 SurfOffset: 0.01
 Slices: 500
@@ -79,18 +79,18 @@ CameraZoom: -0.8344
 [Clip1]
 Enable: false
 Grid: false
-Width: 0.664945
+Width: 0.665278
 GridSize: 1
 GridSquares: 3
 GridColor: 11
 Normal: 1 0 0
-Frame: -0.153977 0.899928 0.407947 0 0.98631 0.115327 0.117867 0 0.059025 0.420511 -0.905365 0 19.9775 -3.93922 3.56009e-33 1
+Frame: -0.153976 0.899927 0.40795 0 0.98631 0.115326 0.117864 0 0.0590222 0.420514 -0.905364 0 19.9775 -3.93922 3.56009e-33 1
 
 
 [Clip2]
 Enable: false
 Grid: false
-Width: 0.664945
+Width: 0.665278
 GridSize: 1
 GridSquares: 3
 GridColor: 12
@@ -101,7 +101,7 @@ Frame: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 [Clip3]
 Enable: false
 Grid: false
-Width: 0.664945
+Width: 0.665278
 GridSize: 1
 GridSquares: 3
 GridColor: 13
@@ -188,7 +188,7 @@ DrawCutSurf: false
 Mode: 0
 CutSurfGrid: false
 Material: 0
-Size: 0 0 0
+Size: 0.0982937 0.0982937 0.0982937
 SurfSize: 15 15
 LineWidth: 1
 BezPoints: 5 5
@@ -1119,7 +1119,7 @@ ParmString: 160, 170, 190
 ParmName: Save Mesh Process Name
 ParmString: Mesh/System/Save
 ParmName: Name of mesh
-ParmString: OvuleCell2DGrowth_23567_stiffUniform100
+ParmString: OvuleCell2DGrowth_MS-Case5
 ParmName: Self Stop Time
 ParmString: 200
 ProcessName: Model/Cell Ovule Growth/10 Growth Signal/a Set Cell Type/Assign
