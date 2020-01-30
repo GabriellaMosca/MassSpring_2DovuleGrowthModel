@@ -1322,9 +1322,9 @@ namespace CellDisk
          Point3d polarizerOrthDir = polarizerDir ^ Point3d(0., 0., 1.);
          polarizerOrthDir *= 1./norm(polarizerDir ^ Point3d(0., 0., 1.));
          double orthoProj = fabs(currentVersor*polarizerOrthDir);
-         if (paralProj/orthoProj >=0.6) 
+         if (paralProj >=0.6) 
              eD.restLength +=  (eD.restLength*averParaGrowth*growthDt*eD.wallGrowthFactor) + (eD.restLength*(strain-eD.wallStrainThreshold) * averParaGrowthStrain);
-         else if (paralProj/orthoProj <=0.4)
+         else if (paralProj <=0.4)
              eD.restLength +=  (eD.restLength*averOrthoGrowth*growthDt*eD.wallGrowthFactor)+ (eD.restLength*(strain-eD.wallStrainThreshold) * averOrthoGrowthStrain);
 
          else 
