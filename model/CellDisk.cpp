@@ -12,7 +12,344 @@
 #include <CCUtils.hpp>
 
 namespace CellDisk
-{
+{ 
+
+   //shape quantifiers processes
+
+  bool SkewSymmetricTensor::run()
+  {
+    mesh = currentMesh();
+    SourceCC = currentMesh()->ccName();
+    if(SourceCC.isEmpty())
+      throw(QString("No input cell complex specified"));
+    if(!mesh->exists(SourceCC))
+      throw(QString("Specified input cell complex does not exist"));
+    meanVtxDistance = parm("Mean Vertex Distance").toDouble();
+    CCStructure &cs = mesh->ccStructure(SourceCC);
+    indexAttr = &mesh->indexAttr();
+    shapeAttr = &mesh->attributes().attrMap<CCIndex,CellShapeData >("CellShapeData");
+
+    
+    cellDAttr = &mesh->attributes().attrMap<CCIndex,MassSpring::CellModelData>("CellModelData"); 
+    if (!mesh->attributes().attrExists("CellModelData"))
+      throw(QString("Warning can not access CellModelData"));
+    if (cellDAttr->size() == 0)
+      throw(QString("Warning the CellModelData attribute is empty"));
+
+
+    //  throw(QString("AuxinSolver::initialize Cannot make Tissue Process:" + parm("Tissue Process")));
+    //tissueProcess->initialize(parent); 
+  
+    //get the barycenter, weighted on the average edge lengths for edges shared by the vtx 
+    for(CCIndex c : cs.faces()) {
+      Point3d barycenter = Point3d(0., 0., 0.);
+      double weightSum = 0.;
+      int nNeighb = 0;
+      typedef std::pair<Point3d, double> midPoint2AvLength;
+      std::vector <midPoint2AvLength> midPointVec2AvLength;
+      for(CCIndex e : cs.incidentCells(c,1)){
+        nNeighb++;
+        std::pair<CCIndex,CCIndex> endpoints = cs.edgeBounds(e);
+        double edgeLength = norm((*indexAttr)[endpoints.first].pos - (*indexAttr)[endpoints.second].pos);
+        double intPart = 0;
+        int avrIntervalNum =0;
+        if (modf(edgeLength/meanVtxDistance, &intPart) <= 4)
+          avrIntervalNum = floor(edgeLength/meanVtxDistance);
+        else
+         avrIntervalNum = ceil(edgeLength/meanVtxDistance);
+        if (avrIntervalNum == 0)
+          throw(QString("The pseudo vertex avera distance is too big, please reduce it"));	
+        double averDist = edgeLength/avrIntervalNum;
+        Point3d versorVtxCreation = ((*indexAttr)[endpoints.second].pos - (*indexAttr)[endpoints.first].pos)/edgeLength;
+        //add the fictitious vertexes for shape evaluation(already mid vertexes of the fictitious edges) -then use the mid-points for method uniformity with the 3D one
+        //get the first mid-vertex
+        midPoint2AvLength tempfirstPair = std::make_pair((*indexAttr)[endpoints.first].pos + (versorVtxCreation * 0.5 * averDist),averDist);
+        midPointVec2AvLength.push_back(tempfirstPair);
+        barycenter += tempfirstPair.first * tempfirstPair.second;
+        weightSum +=  averDist;
+        for (int i =1; i<avrIntervalNum; i++)
+        {
+          midPoint2AvLength tempPair = std::make_pair(tempfirstPair.first + (versorVtxCreation * i * averDist), averDist);
+          midPointVec2AvLength.push_back(tempPair);
+          weightSum += averDist;
+          barycenter += tempPair.first * tempPair.second;
+        }
+      }
+      //the averageLength acts as a weigth to not overextimate points which are close one to another
+      barycenter *= 1./weightSum;
+      (*indexAttr)[c].pos = barycenter;
+      Matrix2d averagePosPos;
+      double xx = 0;
+      double xy = 0;
+      double yy = 0;
+      for (uint i=0; i<midPointVec2AvLength.size(); i++){
+      //for(CCIndex v : cs.incidentCells(c,0)){
+        xx +=midPointVec2AvLength[i].second * pow(midPointVec2AvLength[i].first.x() - barycenter.x(), 2);
+        xy += midPointVec2AvLength[i].second * (midPointVec2AvLength[i].first.x() - barycenter.x())*(midPointVec2AvLength[i].first.y() - barycenter.y());
+        yy += midPointVec2AvLength[i].second * pow(midPointVec2AvLength[i].first.y() - barycenter.y(), 2);
+      }
+      xx *= 1./(weightSum);
+      xy *= 1./(weightSum);
+      yy *= 1./(weightSum);
+
+      averagePosPos[0] = Point2d(xx, xy);
+      averagePosPos[1] = Point2d(xy, yy);
+
+      mdxInfo << "Average correlation matrix " << averagePosPos[0] << endl;
+      mdxInfo << "Average correlation matrix " << averagePosPos[1] << endl;
+      //compute the shape anisotropy along the polarizer direction and its orthogonal
+      if (parm("Intrinsic or Polarizer basis")== "Polarizer")
+      {
+        if ((*cellDAttr)[c].polarizerDir.norm() <= 1.e-6)
+          throw(QString("The polarizer attribute has not been assigned properly or not assigned at all"));
+
+        Point3d polarDir = (*cellDAttr)[c].polarizerDir;
+        //we know this is an in-plane problem
+        Point3d orthoDir = polarDir^Point3d(0., 0., 1.);
+        orthoDir *= 1./orthoDir.norm();
+        Point2d parallProject = averagePosPos * Point2d(polarDir.x(), polarDir.y());
+        double parallLength = parallProject * Point2d(polarDir.x(), polarDir.y());
+        Point2d orthoProject = averagePosPos * Point2d(orthoDir.x(), orthoDir.y());
+        double orthoLength = orthoProject * Point2d(orthoDir.x(), orthoDir.y());
+        //if (parallLength> orthoLength)
+        //{
+        //  (*shapeAttr)[c].skewSymmetricTensor[0] =  Point2d(polarDir.x(), polarDir.y());  
+        //  (*shapeAttr)[c].skewSymmetricTensor[1] = Point2d(parallLength, orthoLength);
+        //}
+        //else
+        //{
+        //we want to display the ratio of orthogonal to polarizer cell size VS parallel
+          (*shapeAttr)[c].skewSymmetricTensor[0] = Point2d(orthoDir.x(), orthoDir.y());
+          (*shapeAttr)[c].skewSymmetricTensor[1] = Point2d(orthoLength, parallLength);
+        //}
+        //in this case the tensor is not diagonalised and I am using a representation or diagonalised tensor..be careful
+        (*shapeAttr)[c].skewSymmetricTensor = transpose((*shapeAttr)[c].skewSymmetricTensor);
+      }
+      //otherwise go for the directions that diagonalize the shape tensor
+      else {
+        Matrix2d eigVect;
+        Point2d eigVal;
+        mdx::fem::calcEigenV(averagePosPos, eigVect, eigVal);
+        if ((eigVal[1]<= 0.) or (eigVal[0] <=0.))
+          throw(QString("Unacceptable eigenvalues for shape shape tensor"));
+        mdxInfo << "The eigenvalus are " << eigVal << endl;
+        if (eigVal[1]> eigVal[0])
+        {
+          (*shapeAttr)[c].skewSymmetricTensor[0] =  eigVect[1];  
+          (*shapeAttr)[c].skewSymmetricTensor[1] = Point2d(eigVal[1], eigVal[0]);
+        }
+        else
+        {
+          //the second eigenvector will be re-computed with the planar cross product
+          (*shapeAttr)[c].skewSymmetricTensor[0] =  eigVect[0];
+          (*shapeAttr)[c].skewSymmetricTensor[1] = eigVal;
+        }
+        (*shapeAttr)[c].skewSymmetricTensor = transpose((*shapeAttr)[c].skewSymmetricTensor);
+      } 
+    }
+    return 0;
+  }
+
+  //compute the two anti-simmetry values wrt to the main cell anisotropy axes (as computed from the skewSymmetricTensor 
+  bool AntiSymmetryTensor::run()
+  {
+   
+    mesh = currentMesh(); 
+    SourceCC = currentMesh()->ccName();
+    if(SourceCC.isEmpty())
+      throw(QString("No input cell complex specified"));
+    if(!mesh->exists(SourceCC))
+      throw(QString("Specified input cell complex does not exist"));
+    CCStructure &cs = mesh->ccStructure(SourceCC);
+    meanVtxDistance = parm("Mean Vertex Distance").toDouble();
+
+
+    indexAttr = &mesh->indexAttr();
+    shapeAttr = &mesh->attributes().attrMap<CCIndex,CellShapeData >("CellShapeData");
+    //if(!getProcess(parm("Tissue Process"), tissueProcess))
+    //  throw(QString("AuxinSolver::initialize Cannot make Tissue Process:" + parm("Tissue Process")));
+    //tissueProcess->initialize(parent); 
+   
+    //get again the cell barycenter (mu) and positional standard deviation(sigma)
+    for(CCIndex c : cs.faces()) {
+      Point3d barycenter = Point3d(0., 0., 0.);
+      double weightSum = 0.;
+      double distanceWeightSum = 0.;
+      int nNeighb = 0;
+      typedef std::pair<Point3d, double> midPoint2AvLength;
+      std::vector <midPoint2AvLength> midPointVec2AvLength;
+      typedef std::pair<Point3d, double> midPoint2AvDist;
+      std::vector <midPoint2AvDist> midPointVec2AvDist;
+ 
+      for(CCIndex e : cs.incidentCells(c,1)){
+        nNeighb++;
+        std::pair<CCIndex,CCIndex> endpoints = cs.edgeBounds(e);
+        double edgeLength = norm((*indexAttr)[endpoints.first].pos - (*indexAttr)[endpoints.second].pos);
+        int avrIntervalNum = 0;
+        double intPart = 0;
+        if (modf(edgeLength/meanVtxDistance, &intPart) <= 4)
+          avrIntervalNum = floor(edgeLength/meanVtxDistance);
+        else
+         avrIntervalNum = ceil(edgeLength/meanVtxDistance);
+        if (avrIntervalNum == 0)
+          throw(QString("The pseudo vertex avera distance is too big, please reduce it"));	
+        double averDist = edgeLength/avrIntervalNum;
+        Point3d versorVtxCreation = ((*indexAttr)[endpoints.second].pos - (*indexAttr)[endpoints.first].pos)/edgeLength;
+        //add the fictitious vertexes for shape evaluation(already mid vertexes of the fictitious edges) -then use the mid-points for method uniformity with the 3D one
+        //get the first mid-vertex
+        midPoint2AvLength tempfirstPair = std::make_pair((*indexAttr)[endpoints.first].pos + (versorVtxCreation * 0.5 * averDist),averDist);
+        midPointVec2AvLength.push_back(tempfirstPair);
+
+        barycenter += tempfirstPair.first * tempfirstPair.second;
+        weightSum +=  averDist;
+        for (int i =1; i<avrIntervalNum; i++)
+        {
+          midPoint2AvLength tempPair = std::make_pair(tempfirstPair.first + (versorVtxCreation * i * averDist), averDist);
+          midPointVec2AvLength.push_back(tempPair);
+          weightSum += averDist;
+          barycenter += tempPair.first * tempPair.second;
+        }
+      }
+      //the averageLength acts as a weigth to not overextimate points which are close one to another
+      barycenter *= 1./weightSum;
+      //(*indexAttr)[c].pos = barycenter;
+      for(uint i=0; i<midPointVec2AvLength.size(); i++){
+        double distance = norm(midPointVec2AvLength[i].first - barycenter);
+        midPoint2AvDist tempPair2Distance = std::make_pair(midPointVec2AvLength[i].first, distance);
+        midPointVec2AvDist.push_back(tempPair2Distance);
+        distanceWeightSum += distance;
+      }
+      //rotate the coordinates so to be in the diagonal basis wrt to the skewSymmetricTensor
+      Point2d minAnisoAxis = Point2d( (*shapeAttr)[c].skewSymmetricTensor[1][0], -(*shapeAttr)[c].skewSymmetricTensor[0][0]);
+      Matrix3d rotateSkewBaisTransp;
+      rotateSkewBaisTransp[0] = Point3d((*shapeAttr)[c].skewSymmetricTensor[0][0], (*shapeAttr)[c].skewSymmetricTensor[1][0], 0.);
+      rotateSkewBaisTransp[1] = Point3d(minAnisoAxis.x(), minAnisoAxis.y(), 0. );
+      rotateSkewBaisTransp[2] = Point3d(0., 0., 1.);
+      
+      std::vector <Point3d> rotatedCellPositions;
+
+      for(uint i=0; i<midPointVec2AvLength.size(); i++){
+        rotatedCellPositions.push_back(midPointVec2AvLength[i].first);
+        rotatedCellPositions[i]= rotateSkewBaisTransp* rotatedCellPositions[i];
+      }
+      //rotate the barycenter as well (it should not matter as the analysis is centered there..)
+      //Point2d barycenter2D = Point2d(barycenter.x(), barycenter.y());
+      barycenter = rotateSkewBaisTransp * barycenter;
+      //get the variance  or standard deviation
+      Point2d posStandDeviationSquared = Point2d(0., 0.);
+      for(uint i=0; i<midPointVec2AvLength.size(); i++){
+         posStandDeviationSquared[0] += midPointVec2AvLength[i].second * pow((rotatedCellPositions[i].x() -barycenter.x()),2);
+         posStandDeviationSquared[1] += midPointVec2AvLength[i].second * pow((rotatedCellPositions[i].y() -barycenter.y()),2);
+
+      }
+      posStandDeviationSquared *= 1./weightSum;
+      posStandDeviationSquared[0] = pow(posStandDeviationSquared[0], 0.5);
+      posStandDeviationSquared[1] = pow(posStandDeviationSquared[1], 0.5);
+      
+      Point2d posStandDeviation = posStandDeviationSquared;
+
+      double asymmV1 = 0;
+      double asymmV2 = 0;
+      for(uint i=0; i<midPointVec2AvLength.size(); i++){
+        //get the two antisymmetry values (the first for the main anisotropy axis, the second for the min)
+        asymmV1 += midPointVec2AvDist[i].second * pow((rotatedCellPositions[i].x() - barycenter.x())/posStandDeviation[0],3);
+        asymmV2 += midPointVec2AvDist[i].second * pow((rotatedCellPositions[i].y() - barycenter.y())/posStandDeviation[1],3);
+      }
+      asymmV1 *= 1./distanceWeightSum;
+      asymmV2 *= 1./distanceWeightSum;
+      (*shapeAttr)[c].asymmetry = Point2d(fabs(asymmV1), fabs(asymmV2));
+    }
+    return 0;
+  }
+
+
+  /*bool VisualizeShapeQuantifiers::initialize(QWidget* parent)
+  {
+
+    //mesh = currentMesh();
+    SourceCC = currentMesh()->ccName();
+    if(SourceCC.isEmpty())
+      throw(QString("No input cell complex specified"));
+    OutputCC = parm("Output CC");
+    AnisotropyVecSize = parm("Anisotropy Vector Size").toDouble();
+    mdxInfo << " Initialize shape quantifeirs" << endl;
+    return true;
+  }*/
+  bool VisualizeShapeQuantifiers::run(Mesh *mesh)
+  {
+    //mesh = currentMesh();
+    SourceCC = currentMesh()->ccName();
+    if(SourceCC.isEmpty())
+      throw(QString("No input cell complex specified"));
+    OutputCC = parm("Output CC");
+    AnisotropyVecSize = parm("Anisotropy Vector Size").toDouble();
+    if(!mesh->exists(SourceCC))
+      throw(QString("Specified input cell complex does not exist"));
+    CCStructure &src = mesh->ccStructure(SourceCC);
+    CCStructure &out = mesh->ccStructure(OutputCC);
+    indexAttr = &mesh->indexAttr();
+    shapeAttr = &mesh->attributes().attrMap<CCIndex,CellShapeData >("CellShapeData");
+    CCIndexDoubleAttr &anisoAttr = mesh->signalAttr<double>("CellAnisotropySignal");
+    CCIndexDoubleAttr &maxAsymmetryAttr = mesh->signalAttr<double>("CellMaxAsymmetrySignal");
+    CCIndexDoubleAttr &minAsymmetryAttr = mesh->signalAttr<double>("CellMinAsymmetrySignal");  
+    CCIndexDoubleAttr &polarAsymmetryAttr = mesh->signalAttr<double>("CellPolarAsymmetrySignal");  
+    CCIndexDoubleAttr &orthogonalAsymmetryAttr = mesh->signalAttr<double>("CellOrthogonalAsymmetrySignal"); 
+    mdxInfo << " I am in visualize Shape Qna " << endl;
+    out = CCStructure(2);
+    forall(CCIndex f, src.cellsOfDimension(2)) {
+       (anisoAttr)[f] = ((*shapeAttr)[f].skewSymmetricTensor[0][1] / (*shapeAttr)[f].skewSymmetricTensor[1][1]);  
+       (maxAsymmetryAttr)[f] = (*shapeAttr)[f].asymmetry[0];
+       (minAsymmetryAttr)[f] = (*shapeAttr)[f].asymmetry[1];
+       (polarAsymmetryAttr)[f] = (*shapeAttr)[f].asymmetry[1];
+       (orthogonalAsymmetryAttr)[f] = (*shapeAttr)[f].asymmetry[0];
+
+       //if(DrawPolarizer) {
+       CCIndexData V = (*indexAttr)[f];
+       out.addCell(f);
+       // Add the vertices
+       CCIndex v1 = CCIndexFactory.getIndex();
+       out.addCell(v1);
+       CCIndex v2 = CCIndexFactory.getIndex();
+       out.addCell(v2);
+
+       CCIndex v3 = CCIndexFactory.getIndex();
+       out.addCell(v3);
+       CCIndex v4 = CCIndexFactory.getIndex();
+       out.addCell(v4);
+
+
+       CCIndexData V1 = (*indexAttr)[v1];
+       CCIndexData V2 = (*indexAttr)[v2];
+       CCIndexData V3 = (*indexAttr)[v3];
+       CCIndexData V4 = (*indexAttr)[v4];
+
+       V1.pos = V.pos - (0.5 * Point3d((*shapeAttr)[f].skewSymmetricTensor[0][0], (*shapeAttr)[f].skewSymmetricTensor[1][0], 0.) * AnisotropyVecSize * (*shapeAttr)[f].skewSymmetricTensor[0][1]/((*shapeAttr)[f].skewSymmetricTensor[0][1] + (*shapeAttr)[f].skewSymmetricTensor[1][1]));
+       V2.pos = V.pos + (0.5 * Point3d((*shapeAttr)[f].skewSymmetricTensor[0][0], (*shapeAttr)[f].skewSymmetricTensor[1][0], 0.) * AnisotropyVecSize * (*shapeAttr)[f].skewSymmetricTensor[0][1]/((*shapeAttr)[f].skewSymmetricTensor[0][1] + (*shapeAttr)[f].skewSymmetricTensor[1][1]));
+          
+       Point3d minAnisoAxis = Point3d( (*shapeAttr)[f].skewSymmetricTensor[1][0], -(*shapeAttr)[f].skewSymmetricTensor[0][0], 0.);
+       V3.pos = V.pos - (0.5 * minAnisoAxis * AnisotropyVecSize * (*shapeAttr)[f].skewSymmetricTensor[1][1]/((*shapeAttr)[f].skewSymmetricTensor[0][1] + (*shapeAttr)[f].skewSymmetricTensor[1][1]));
+       V4.pos = V.pos + (0.5 * minAnisoAxis * AnisotropyVecSize * (*shapeAttr)[f].skewSymmetricTensor[1][1]/((*shapeAttr)[f].skewSymmetricTensor[0][1] + (*shapeAttr)[f].skewSymmetricTensor[1][1]));
+       
+       (*indexAttr)[v1] = V1;
+       (*indexAttr)[v2] = V2;
+       (*indexAttr)[v3] = V3;
+       (*indexAttr)[v4] = V4;
+       //double minAxisNorm = norm(V4.pos - V3.pos);
+       //mdxInfo << "minAnisoNorm " << minAxisNorm << endl;
+       // Add the edge
+       CCIndex e = CCIndexFactory.getIndex();
+       out.addCell(e, +v1 -v2);
+
+       CCIndex e2 = CCIndexFactory.getIndex();
+       out.addCell(e2, +v3 -v4);
+    }
+    mesh->drawParms(OutputCC).setGroupVisible("Vertices", true);
+    mesh->drawParms(OutputCC).setGroupVisible("Edges", true);
+    //mesh->drawParms(OutputCC).setGroupVisible("Faces", true);
+
+    mesh->updateAll(OutputCC);
+    return 0;
+  }
   /*
    * Auxin model processes
    */	

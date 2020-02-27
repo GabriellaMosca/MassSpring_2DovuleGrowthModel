@@ -26,6 +26,12 @@ using namespace mdx;
 using namespace fem;
 namespace CellDisk
 {
+
+  class SkewSymmetricTensor;
+  class AntiSymmetryTensor;
+  class VisualizeShapeQuantifiers;
+  class MassSpring;
+
   /*
    * Auxin simulation, up the gradient
    */
@@ -850,6 +856,158 @@ namespace CellDisk
     MassSpring::CellModelAttr *cellDAttr = 0; 
 
   };
+
+   //classes and structures to compute and draw shape quantifiers
+  struct CellShapeData
+  {
+     Matrix2d skewSymmetricTensor; // build the position correlation matrix
+     Point2d asymmetry; // get the skewness information about rotated x and y coordinates
+     
+     CellShapeData() {}
+  
+     bool operator==(const CellShapeData &other) const
+     {
+      if(skewSymmetricTensor == other.skewSymmetricTensor and asymmetry== other.asymmetry)
+        return true;
+      return false;
+     }      
+  };
+  typedef AttrMap<CCIndex,CellShapeData> CellShapeAttr;
+
+  bool inline readAttr(CellShapeData &m, const QByteArray &ba, size_t &pos) 
+  { 
+    return mdx::readChar((char *)&m, sizeof(CellShapeData), ba, pos);
+  }
+  bool inline writeAttr(const CellShapeData  &m, QByteArray &ba)
+  { 
+    return mdx::writeChar((char *)&m, sizeof(CellShapeData), ba);
+  }
+
+
+  class ComputeCellShapeQuantifier : public Process
+  {
+    public:
+      ComputeCellShapeQuantifier(const Process &process) : Process(process) 
+      {
+        setName("Model/Cell Ovule Growth/50 Shape Quantifier/00 Global Shape Quantifier Process");
+        setDesc("Compute cell shape anisotropy and antisymmetry.");
+        setIcon(QIcon(":/images/CellType.png"));
+
+        addParm("Compute Skew Symmetric tensor process", "Compute Skew Symmetric tensor process", "Model/Cell Ovule Growth/50 Shape Quantifier/01 Compute Skey Symmetric Tensor");
+        addParm("Compute Antisymmetry tensor process", "Compute Antisymmetry tensor process", "Model/Cell Ovule Growth/50 Shape Quantifier/02 Compute Antisymmetry Tensor");
+        addParm("Visualize shape field process", "Visualize shape field", "Model/Cell Ovule Growth/50 Shape Quantifier/03 Visualize Shape Field");
+
+
+      }
+      //bool initialize(QWidget* parent);
+      bool run();
+      CCIndexDataAttr  *indexAttr = 0;
+      //AuxinGradient::CellDataAttr *cellAttr = 0;
+      //AuxinGradient::EdgeDataAttr *edgeAttr = 0;
+      //SkewSymmetricTensor *skewSymmetricTensorProcess = 0;
+      //CellShapeAttr *shapeAttr = 0;
+      SkewSymmetricTensor *anisotropyTensorProcess = 0;
+      AntiSymmetryTensor *antisymmetryTensorProcess = 0;
+      VisualizeShapeQuantifiers *visualizeCellShapeProcess = 0;
+
+    private:
+
+  };
+
+  class SkewSymmetricTensor : public Process
+  {
+    public:
+      SkewSymmetricTensor(const Process &process) : Process(process) 
+      {
+        setName("Model/Cell Ovule Growth/50 Shape Quantifier/01 Compute Skey Symmetric Tensor");
+
+        setDesc("Compute cell shape anisotropy.");
+        setIcon(QIcon(":/images/CellType.png"));
+        addParm("Mean Vertex Distance", "Minimal distance for pseudo-vertexes added to the cell graph for shape computation << average edge legnth", "0.5");
+        addParm("Intrinsic or Polarizer basis", "Wich basis to use for asymmetry calculation, intrinsic (principal direction) or polarizer", "Polarizer", QStringList() << "Polarizer" << "Intrinsic");
+
+        //addParm("Tissue Process", "Name of process for Cell Tissue simulation", "Model/Cell Ovule Growth/40 Cell Tissue/a Cell Tissue Process");
+
+
+      }
+      bool run();
+      CCIndexDataAttr  *indexAttr = 0;
+      CellShapeAttr *shapeAttr = 0;
+
+      MassSpring::CellModelAttr *cellDAttr = 0; 
+
+      Mesh *mesh = 0;
+      QString SourceCC;
+      double meanVtxDistance;
+
+      //CellTissueProcess *tissueProcess = 0;
+
+      //AuxinGradient::CellDataAttr *cellAttr = 0;
+      //AuxinGradient::EdgeDataAttr *edgeAttr = 0;
+
+    private:
+
+  };
+
+  class AntiSymmetryTensor : public Process
+  {
+    public:
+      AntiSymmetryTensor(const Process &process) : Process(process) 
+      {
+        setName("Model/Cell Ovule Growth/50 Shape Quantifier/02 Compute Antisymmetry Tensor");
+
+        setDesc("Compute cell shape anisotropy.");
+        setIcon(QIcon(":/images/CellType.png"));
+   
+        addParm("Mean Vertex Distance", "Minimal distance for pseudo-vertexes added to the cell graph for shape computation << average edge legnth", "0.5");
+
+      }
+      bool run();
+      CCIndexDataAttr  *indexAttr = 0;
+      CellShapeAttr *shapeAttr = 0;
+      Mesh *mesh = 0;
+      QString SourceCC;
+      double meanVtxDistance;
+      //AuxinGradient::CellDataAttr *cellAttr = 0;
+      //AuxinGradient::EdgeDataAttr *edgeAttr = 0;
+
+    private:
+
+  };
+
+  class VisualizeShapeQuantifiers : public Process
+  {
+    public:
+    //enum ParmNames { pOutputCC, pVectorSize, pNumParms };
+
+    VisualizeShapeQuantifiers(const Process &process) : Process(process) 
+    {
+      setName("Model/Cell Ovule Growth/50 Shape Quantifier/03 Visualize Shape Field");
+      setDesc("Draw shape fields and anisotropy vectors.");
+      setIcon(QIcon(":/images/Default.png"));
+
+      //addParm("Source CC", "Name of source cell complex", "");
+      addParm("Visualized field", "Which shape field to visualize", "Anisotropy", QStringList() << "Anisotropy" << "Max Asymmetry" << "Min Asymmetry" << "Anisotropy + Max Asymmetry" << "None" );
+      addParm("Output CC", "Name of output cell complex", "Draw cell anisotropy");
+      addParm("Anisotropy Vector Size", "Amount to scale anisotropy vector", "1.0");
+    }
+    //bool initialize(QWidget* parent);
+  
+    bool run() { return run(currentMesh()); }
+    bool run(Mesh *mesh);
+
+  private:
+    // Parameters
+    QString SourceCC;
+    QString OutputCC;
+    bool DrawAnisoVec;
+    double AnisotropyVecSize;
+    CellShapeAttr *shapeAttr = 0;
+    CCIndexDataAttr *indexAttr = 0;
+    //Mesh *mesh = 0;
+
+  };
+
   ///////////////////////////////////////////////////////////////////////////////////////
   /* 
   CellTissueCelDivideOvule class
