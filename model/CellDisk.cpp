@@ -144,6 +144,7 @@ namespace CellDisk
           (*shapeAttr)[c].skewSymmetricTensor[0] =  eigVect[0];
           (*shapeAttr)[c].skewSymmetricTensor[1] = eigVal;
         }
+	mdxInfo<< "Diagonalize first eigenvector" << (*shapeAttr)[c].skewSymmetricTensor[0] << endl;
         (*shapeAttr)[c].skewSymmetricTensor = transpose((*shapeAttr)[c].skewSymmetricTensor);
       } 
     }
@@ -350,6 +351,23 @@ namespace CellDisk
     mesh->updateAll(OutputCC);
     return 0;
   }
+
+  bool ComputeCellShapeQuantifier::run()
+  {
+     if(!getProcess(parm("Compute Skew Symmetric tensor process"),anisotropyTensorProcess ))
+       throw(QString("ComputeCellShapeQuantifier::initialize Cannot make :" + parm("Compute Skew Symmetric tensor process")));
+     if(!getProcess(parm("Compute Antisymmetry tensor process"), antisymmetryTensorProcess))
+       throw(QString("ComputeCellShapeQuantifier::initialize Cannot make :" + parm("Compute Antisymmetry tensor process")));
+     if(!getProcess(parm("Visualize shape field process"), visualizeCellShapeProcess))
+       throw(QString("ComputeCellShapeQuantifier::initialize Cannot make :" + parm("Visualize shape field process")));
+
+     anisotropyTensorProcess->run();
+     antisymmetryTensorProcess->run();
+     visualizeCellShapeProcess->run();
+  
+     return true;
+  }
+
   /*
    * Auxin model processes
    */	
@@ -2408,4 +2426,9 @@ namespace CellDisk
   REGISTER_PROCESS(CellDiskTissue);
   REGISTER_PROCESS(CellDiskDivide);
   REGISTER_PROCESS(CellDiskSplitEdges);
+
+  REGISTER_PROCESS(SkewSymmetricTensor);
+  REGISTER_PROCESS(AntiSymmetryTensor);
+  REGISTER_PROCESS(VisualizeShapeQuantifiers);
+  REGISTER_PROCESS(ComputeCellShapeQuantifier);
 }

@@ -1,7 +1,7 @@
 // Parameters for MorphoDynamX
 [Main]
 MDXVersion: 2.0
-MDXRevision: 2-674-ge6183014
+MDXRevision: 2-689
 ClearColor: 0
 SurfOffset: 0.01
 Slices: 500
@@ -79,7 +79,7 @@ CameraZoom: -0.7752
 [Clip1]
 Enable: false
 Grid: false
-Width: 0.664613
+Width: 0.664945
 GridSize: 1
 GridSquares: 3
 GridColor: 11
@@ -90,7 +90,7 @@ Frame: 0.986852 -0.0536119 -0.152473 0 0.0572142 0.998175 0.0193343 0 0.151159 -
 [Clip2]
 Enable: false
 Grid: false
-Width: 0.664613
+Width: 0.664945
 GridSize: 1
 GridSquares: 3
 GridColor: 12
@@ -101,7 +101,7 @@ Frame: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 [Clip3]
 Enable: false
 Grid: false
-Width: 0.664613
+Width: 0.664945
 GridSize: 1
 GridSquares: 3
 GridColor: 13
@@ -112,7 +112,7 @@ Frame: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 [Stack1]
 StackFile: 
 WorkStackFile: 
-MeshFile: ../../../massSpringSimulations/veryFinaleSetPaper/case_234567/OvuleCell2DGrowth_234567_stiffUniform100-0170.mdxm
+MeshFile: ../case2/OvuleCell2DGrowth_MS-Case2-0190.mdxm
 MainShow: false
 MainBright:1
 MainOpacity:0.8
@@ -136,7 +136,7 @@ ScaleX:1
 ScaleY:1
 ScaleZ:1
 Scale:1.73205
-LoadMeshScaleUm: true
+LoadMeshScaleUm: false
 LoadMeshTransform: false
 MeshShift: 0
 CCName: Tissue
@@ -149,7 +149,7 @@ Trans: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 [Stack2]
 StackFile: 
 WorkStackFile: 
-MeshFile: ../../../massSpringSimulations/veryFinaleSetPaper/case_23567/OvuleCell2DGrowth_23567_stiffUniform100-0170.mdxm
+MeshFile: ../case2/robustness_analysis_110Stiffness/OvuleCell2DGrowth_MS-Case2_stiffness110-0190.mdxm
 MainShow: false
 MainBright:1
 MainOpacity:0.8
@@ -1434,6 +1434,32 @@ ProcessName: Model/Cell Ovule Growth/40 Cell Tissue/c Split Edges
 NumParms: 1
 ParmName: Max Length
 ParmString: 1000
+ProcessName: Model/Cell Ovule Growth/50 Shape Quantifier/00 Global Shape Quantifier Process
+NumParms: 3
+ParmName: Compute Skew Symmetric tensor process
+ParmString: Model/Cell Ovule Growth/50 Shape Quantifier/01 Compute Skey Symmetric Tensor
+ParmName: Compute Antisymmetry tensor process
+ParmString: Model/Cell Ovule Growth/50 Shape Quantifier/02 Compute Antisymmetry Tensor
+ParmName: Visualize shape field process
+ParmString: Model/Cell Ovule Growth/50 Shape Quantifier/03 Visualize Shape Field
+ProcessName: Model/Cell Ovule Growth/50 Shape Quantifier/01 Compute Skey Symmetric Tensor
+NumParms: 2
+ParmName: Mean Vertex Distance
+ParmString: 0.5
+ParmName: Intrinsic or Polarizer basis
+ParmString: Polarizer
+ProcessName: Model/Cell Ovule Growth/50 Shape Quantifier/02 Compute Antisymmetry Tensor
+NumParms: 1
+ParmName: Mean Vertex Distance
+ParmString: 0.5
+ProcessName: Model/Cell Ovule Growth/50 Shape Quantifier/03 Visualize Shape Field
+NumParms: 3
+ParmName: Visualized field
+ParmString: Anisotropy
+ParmName: Output CC
+ParmString: Draw cell anisotropy
+ParmName: Anisotropy Vector Size
+ParmString: 1.0
 ProcessName: Model/Cell Ovule Growth/50 Visualize Assigned Cell Properties
 NumParms: 1
 ParmName: Field to visualize

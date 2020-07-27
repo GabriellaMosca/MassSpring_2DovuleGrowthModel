@@ -1,7 +1,7 @@
 // Parameters for MorphoDynamX
 [Main]
 MDXVersion: 2.0
-MDXRevision: 2-674-ge6183014
+MDXRevision: 2-719
 ClearColor: 0
 SurfOffset: 0.01
 Slices: 500
@@ -79,7 +79,7 @@ CameraZoom: -0.192
 [Clip1]
 Enable: false
 Grid: false
-Width: 0.653431
+Width: 0.654071
 GridSize: 1
 GridSquares: 3
 GridColor: 11
@@ -90,7 +90,7 @@ Frame: 1 0 0 0 0 1 0 0 0 0 1 0 41.3932 1.16273 2.29779e-15 1
 [Clip2]
 Enable: false
 Grid: false
-Width: 0.653431
+Width: 0.654071
 GridSize: 1
 GridSquares: 3
 GridColor: 12
@@ -101,7 +101,7 @@ Frame: 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
 [Clip3]
 Enable: false
 Grid: false
-Width: 0.653431
+Width: 0.654071
 GridSize: 1
 GridSquares: 3
 GridColor: 13
@@ -228,21 +228,21 @@ AutoUnit: true
 Position: BottomRight
 Direction: Horizontal
 TextPosition: Out
-Thickness: 5
-ShiftBorder: 20 20
-FontSize: 12
+Thickness: 20
+ShiftBorder: 200 200
+FontSize:40
 
 [ColorBar]
 ScaleLength: 0.3
-Width: 20
+Width: 40
 DistanceToBorder: 5
-TextToBar: 5
-TickSize: 2
+TextToBar: 7
+TickSize: 4
 ExpSize: 0.7
 Epsilon: 1e-09
-LineWidth: 2
+LineWidth: 4
 Position: TopLeft
-FontSize: 10
+FontSize: 25
 Orientation: Vertical
 
 [Process]
@@ -598,6 +598,8 @@ ParmName: Nhbd Size
 ParmString: 0.2
 ParmName: Nhbd Offset
 ParmString: 0.01
+ProcessName: Mesh/Misc/Fix Global Orientation
+NumParms: 0
 ProcessName: Mesh/Misc/Print Flip Table
 NumParms: 1
 ParmName: File Name
@@ -702,6 +704,12 @@ ProcessName: Mesh/Selection/Clear Selection
 NumParms: 0
 ProcessName: Mesh/Selection/Copy Selection
 NumParms: 0
+ProcessName: Mesh/Selection/Extend face selection by Normal and Distance
+NumParms: 2
+ParmName: Angle range
+ParmString: 30.0
+ParmName: Euclidean Distance
+ParmString: 40.0
 ProcessName: Mesh/Selection/Invert Selection
 NumParms: 1
 ParmName: Dimension
@@ -742,6 +750,10 @@ ProcessName: Mesh/Selection/Select Faces of Volumes
 NumParms: 0
 ProcessName: Mesh/Selection/Select Incident Cells
 NumParms: 0
+ProcessName: Mesh/Selection/Select Margin for Wege-Mesh
+NumParms: 1
+ParmName: Dimension
+ParmString: Vertices
 ProcessName: Mesh/Selection/Select Vertices Extend
 NumParms: 1
 ParmName: Distance
@@ -825,12 +837,12 @@ ParmString: 1.0
 ParmName: Signal
 ParmString: 
 ProcessName: Mesh/Signal/Project Mesh Curvature
-NumParms: 10
+NumParms: 11
 ParmName: Type
 ParmString: Gaussian
 ParmName: Neighborhood
 ParmString: 5.0
-ParmName: AutoScale
+ParmName: Auto Scale
 ParmString: Yes
 ParmName: Min Curv
 ParmString: -50.0
@@ -845,6 +857,8 @@ ParmString:
 ParmName: Select Nhbd
 ParmString: No
 ParmName: Do Axis
+ParmString: Yes
+ParmName: Update Normals
 ParmString: Yes
 ProcessName: Mesh/Signal/Project Signal
 NumParms: 6
@@ -954,6 +968,8 @@ ParmName: Angle
 ParmString: -5
 ParmName: Scale
 ParmString: 1
+ProcessName: Mesh/Structure/Transform Mesh by frame
+NumParms: 0
 ProcessName: Mesh/System/Delete Cell Complex
 NumParms: 1
 ParmName: Cell Complex Name
@@ -1434,6 +1450,32 @@ ProcessName: Model/Cell Ovule Growth/40 Cell Tissue/c Split Edges
 NumParms: 1
 ParmName: Max Length
 ParmString: 1000
+ProcessName: Model/Cell Ovule Growth/50 Shape Quantifier/00 Global Shape Quantifier Process
+NumParms: 3
+ParmName: Compute Skew Symmetric tensor process
+ParmString: Model/Cell Ovule Growth/50 Shape Quantifier/01 Compute Skey Symmetric Tensor
+ParmName: Compute Antisymmetry tensor process
+ParmString: Model/Cell Ovule Growth/50 Shape Quantifier/02 Compute Antisymmetry Tensor
+ParmName: Visualize shape field process
+ParmString: Model/Cell Ovule Growth/50 Shape Quantifier/03 Visualize Shape Field
+ProcessName: Model/Cell Ovule Growth/50 Shape Quantifier/01 Compute Skey Symmetric Tensor
+NumParms: 2
+ParmName: Mean Vertex Distance
+ParmString: 0.5
+ParmName: Intrinsic or Polarizer basis
+ParmString: Polarizer
+ProcessName: Model/Cell Ovule Growth/50 Shape Quantifier/02 Compute Antisymmetry Tensor
+NumParms: 1
+ParmName: Mean Vertex Distance
+ParmString: 0.5
+ProcessName: Model/Cell Ovule Growth/50 Shape Quantifier/03 Visualize Shape Field
+NumParms: 3
+ParmName: Visualized field
+ParmString: Anisotropy
+ParmName: Output CC
+ParmString: Draw cell anisotropy
+ParmName: Anisotropy Vector Size
+ParmString: 1.0
 ProcessName: Model/Cell Ovule Growth/50 Visualize Assigned Cell Properties
 NumParms: 1
 ParmName: Field to visualize
@@ -1446,126 +1488,6 @@ ParmName: Cell Complex
 ParmString: Tissue
 ParmName: Dirichlet Attribute
 ParmString: Dirichlet Attribute
-ProcessName: Model/Diffusion/00 Initialize attribute from selected vertices
-NumParms: 2
-ParmName: Complex Name
-ParmString: 
-ParmName: Attribute
-ParmString: Initial Set
-ProcessName: Model/Diffusion/01 Compute 2D Hodge Values
-NumParms: 2
-ParmName: Complex Name
-ParmString: 
-ParmName: Attribute
-ParmString: Hodge Values
-ProcessName: Model/Diffusion/02 Solve Poisson Equation
-NumParms: 4
-ParmName: Complex Name
-ParmString: 
-ParmName: Hodge Attribute
-ParmString: Hodge Values
-ParmName: Input Attribute
-ParmString: Poisson RHS
-ParmName: Solution Attribute
-ParmString: Poisson Solution
-ProcessName: Model/Diffusion/02 Solve Symmetric Poisson Equation
-NumParms: 4
-ParmName: Complex Name
-ParmString: 
-ParmName: Hodge Attribute
-ParmString: Hodge Values
-ParmName: Input Attribute
-ParmString: Poisson RHS
-ParmName: Solution Attribute
-ParmString: Poisson Solution
-ProcessName: Model/Diffusion/03 Solve Heat Equation
-NumParms: 9
-ParmName: Complex Name
-ParmString: 
-ParmName: Diffusion Constant
-ParmString: 0.1
-ParmName: Decay Constant
-ParmString: 0.0
-ParmName: Use initial
-ParmString: 0.0
-ParmName: Max iteration
-ParmString: 5000.0
-ParmName: Solve error
-ParmString: 1e-20
-ParmName: Hodge Attribute
-ParmString: Hodge Values
-ParmName: Input Attribute
-ParmString: Heat RHS
-ParmName: Solution Attribute
-ParmString: Heat Solution
-ProcessName: Model/Diffusion/04 Solve Diffusion Equation
-NumParms: 9
-ParmName: Complex Name
-ParmString: 
-ParmName: Diffusion Constant
-ParmString: 0.1
-ParmName: Decay Constant
-ParmString: 0.1
-ParmName: Use initial
-ParmString: 1.0
-ParmName: Max iteration
-ParmString: 5000.0
-ParmName: Solve error
-ParmString: 1e-20
-ParmName: Hodge Attribute
-ParmString: Hodge Values
-ParmName: Input Attribute
-ParmString: Diffusion RHS
-ParmName: Solution Attribute
-ParmString: Diffusion Solution
-ProcessName: Model/Diffusion/05 Compute Distance Field
-NumParms: 5
-ParmName: Complex Name
-ParmString: 
-ParmName: Diffusion Scale
-ParmString: 10
-ParmName: Hodge Attribute
-ParmString: Hodge Values
-ParmName: Source Attribute
-ParmString: Initial Set
-ParmName: Solution Attribute
-ParmString: Distance solution
-ProcessName: Model/Diffusion/06 Distance From Selected Vertices
-NumParms: 4
-ParmName: Complex Name
-ParmString: 
-ParmName: Diffusion Scale
-ParmString: 100
-ParmName: Hodge Attribute
-ParmString: Hodge Values
-ParmName: Solution Signal
-ParmString: Distance
-ProcessName: Model/Diffusion/07 Diffuse From Selected Vertices
-NumParms: 8
-ParmName: Complex Name
-ParmString: 
-ParmName: Diffusion Constant
-ParmString: 0.1
-ParmName: Decay Constant
-ParmString: 0.1
-ParmName: Use initial
-ParmString: 1.0
-ParmName: Max iteration
-ParmString: 5000.0
-ParmName: Solve error
-ParmString: 1e-20
-ParmName: Hodge Attribute
-ParmString: Hodge Values
-ParmName: Solution Signal
-ParmString: 
-ProcessName: Model/Diffusion/08 Gradient on Faces
-NumParms: 3
-ParmName: Complex Name
-ParmString: 
-ParmName: Scalar Field
-ParmString: 
-ParmName: Vector Field
-ParmString: 
 ProcessName: Stack/Analyses/Compute Volumes
 NumParms: 1
 ParmName: File Name

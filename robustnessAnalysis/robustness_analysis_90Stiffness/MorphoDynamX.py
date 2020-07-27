@@ -111,3 +111,6 @@ Process.Model__Cell_Ovule_Growth__10_Growth_Signal__a_Set_Cell_Type__Assign('Gro
 Process.Model__Cell_Ovule_Growth__10_Growth_Signal__c_Growth_Signal_Solver('1', '0.01', '.0001', '0.1', '0.01', '100', 'Adaptive Euler', 'Bi-conjugate Gradient Stabilized', '50', '1.e-10', 'Yes', '1.e-8', 'Model/Cell Ovule Growth/10 Growth Signal/b Growth Signal Gradient', 'Model/Cell Ovule Growth/40 Cell Tissue/a Cell Tissue Process')
 Process.Mesh__System__Save('/home/gabriella/IMAGO_project/git_repoMassSpring2D/MassSpring_2DovuleGrowthModel/case2/robustness_analysis_90Stiffness/OvuleCell2DGrowth_MS-Case2_stiff90-0190.mdxm', 'no', '0')
 Process.Tools__System__Load_View('/home/gabriella/IMAGO_project/git_repoMassSpring2D/MassSpring_2DovuleGrowthModel/model/comparisonImageSettingFinalPaper.mdxv')
+Process.Tools__System__Load_View('/home/gabriella/IMAGO_project/git_repoMassSpring2D/MassSpring_2DovuleGrowthModel/robustnessAnalysis/robustness_analysis_90Stiffness/CellDisk.mdxv')
+######## New MorphoDynamX session v2.0 r2-727: 2020-07-24 20:41:10
+Process.Tools__System__Load_View('/home/gabriella/IMAGO_project/git_repoMassSpring2D/MassSpring_2DovuleGrowthModel/robustnessAnalysis/robustness_analysis_90Stiffness/CellDisk.mdxv')

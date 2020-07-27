@@ -30,6 +30,7 @@ namespace CellDisk
   class SkewSymmetricTensor;
   class AntiSymmetryTensor;
   class VisualizeShapeQuantifiers;
+  class ComputeCellShapeQuantifer;
   class MassSpring;
 
   /*
@@ -856,7 +857,7 @@ namespace CellDisk
     MassSpring::CellModelAttr *cellDAttr = 0; 
 
   };
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //classes and structures to compute and draw shape quantifiers
   struct CellShapeData
   {
