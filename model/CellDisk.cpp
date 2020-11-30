@@ -289,16 +289,21 @@ namespace CellDisk
     CCStructure &src = mesh->ccStructure(SourceCC);
     CCStructure &out = mesh->ccStructure(OutputCC);
     indexAttr = &mesh->indexAttr();
+    //cellDAttr = &mesh->attributes().attrMap<CCIndex,MassSpring::CellModelData>("CellModelData"); 
+
     shapeAttr = &mesh->attributes().attrMap<CCIndex,CellShapeData >("CellShapeData");
     CCIndexDoubleAttr &anisoAttr = mesh->signalAttr<double>("CellAnisotropySignal");
+    CCIndexDoubleAttr &areaAttr = mesh->signalAttr<double>("CellArea");
+
     CCIndexDoubleAttr &maxAsymmetryAttr = mesh->signalAttr<double>("CellMaxAsymmetrySignal");
     CCIndexDoubleAttr &minAsymmetryAttr = mesh->signalAttr<double>("CellMinAsymmetrySignal");  
     CCIndexDoubleAttr &polarAsymmetryAttr = mesh->signalAttr<double>("CellPolarAsymmetrySignal");  
     CCIndexDoubleAttr &orthogonalAsymmetryAttr = mesh->signalAttr<double>("CellOrthogonalAsymmetrySignal"); 
-    mdxInfo << " I am in visualize Shape Qna " << endl;
+    // mdxInfo << " I am in visualize Shape Qna " << endl;
     out = CCStructure(2);
     forall(CCIndex f, src.cellsOfDimension(2)) {
-       (anisoAttr)[f] = ((*shapeAttr)[f].skewSymmetricTensor[0][1] / (*shapeAttr)[f].skewSymmetricTensor[1][1]);  
+       (anisoAttr)[f] = ((*shapeAttr)[f].skewSymmetricTensor[0][1] / (*shapeAttr)[f].skewSymmetricTensor[1][1]); 
+       (areaAttr)[f] = (*indexAttr)[f].measure; 
        (maxAsymmetryAttr)[f] = (*shapeAttr)[f].asymmetry[0];
        (minAsymmetryAttr)[f] = (*shapeAttr)[f].asymmetry[1];
        (polarAsymmetryAttr)[f] = (*shapeAttr)[f].asymmetry[1];

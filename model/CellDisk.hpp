@@ -863,6 +863,7 @@ namespace CellDisk
   {
      Matrix2d skewSymmetricTensor; // build the position correlation matrix
      Point2d asymmetry; // get the skewness information about rotated x and y coordinates
+     //double area; // area of the cell
      
      CellShapeData() {}
   
@@ -988,7 +989,7 @@ namespace CellDisk
       setIcon(QIcon(":/images/Default.png"));
 
       //addParm("Source CC", "Name of source cell complex", "");
-      addParm("Visualized field", "Which shape field to visualize", "Anisotropy", QStringList() << "Anisotropy" << "Max Asymmetry" << "Min Asymmetry" << "Anisotropy + Max Asymmetry" << "None" );
+      //addParm("Visualized field", "Which shape field to visualize", "Anisotropy", QStringList() << "Anisotropy" << "Max Asymmetry" << "Min Asymmetry" << "Anisotropy + Max Asymmetry" << "Area" << "None" );
       addParm("Output CC", "Name of output cell complex", "Draw cell anisotropy");
       addParm("Anisotropy Vector Size", "Amount to scale anisotropy vector", "1.0");
     }
@@ -1005,6 +1006,7 @@ namespace CellDisk
     double AnisotropyVecSize;
     CellShapeAttr *shapeAttr = 0;
     CCIndexDataAttr *indexAttr = 0;
+    // MassSpring::CellModelAttr *cellDAttr = 0; 
     //Mesh *mesh = 0;
 
   };
