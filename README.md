@@ -1,23 +1,34 @@
 # MassSpringModels_ovuleGrowth2D
-plugin for MorphoMechanX(http://www.mpipz.mpg.de/MorphoGraphX/MorphoMechanX/) to generate 2D simulations of growing and dividing ovules at cellular resolution based on masssprings.
+plugin for MorphoMechanX(www.MorphoMechanX.org) to generate 2D simulations of growing and dividing ovules at cellular resolution based on mass-springs.
 
+MorphoMechanX can be installed from package for Linux Mint 19 and Ubuntu 20.04. The package is provided at this git https://github.com/GabriellaMosca/PollenGrain_indentation (or https://zenodo.org/record/4590379#.YF3MyIBKiM8). The user should follow instructions from 1. to 4.
+
+Alternatively, MMX can be installed from source code and can be requested at: www.MorphoMechanX.org
 The Git revision number these models are guarantedd to run with is: 
+
 e618301477af8a0bda2c344a7312195ba5acf379
 
-The Git revision number should be provided together with the request for MorphoMechanX, which is to be addressed to Richard.Smith@jic.ac.uk
-Installation instructions can be requested together with the package or asked alternatively to this email address: gabriella.mosca@gmail.com 
+The Mass-Spring model itself does not require installation.
+After MorphoMechanX has been installed, to run the model:
 
-MorphoMechanX work on Linux and the models have been tested on Linux Mint 19. 
+1) open a terminal from the "model" directory provided in this repository
 
-The plugin itself does not require installation. After MorphoMechanX has been installed, to run the model 
-1)move into the model directory from a terminal
-2)type "make run" and enter.  
-This will open a graphically interactive window of MorphoDynamX, and MorphoMechanX tab will be shown (Process/Model).
-Depending on which model case the user wants to run, choose a case number (i.e. case2): 
--open a windown into its folder (i.e. a window inside case2),
--drag and drop the view file: "CellDisk.mdxv" into MorphoDynamX window 
-(altrernatively go into MorphoDynamX and open the File tab and from there select "CellDisk.mdxv" from the chosen folder case.
+2) type "make clean" from the terminal
+
+3) type "make run" from the terminal.
+
+This will open a graphically interactive window of MorphoDynamX, and MorphoMechanX tab will be shown (under Process/Model).
+
+Depending on which specific model the user wants to run (with reference to the model variants defined in the paper), choose a model number (for example "MS-Model2"):
+
+-open the chosen model folder from a navigation browser (i.e. a terminal from "MS-Model2")
+
+-drag and drop the view file: "CellDisk.mdxv"  into the already open MorphoDynamX window 
+
+(altrernatively go into MorphoDynamX and open the File tab and from there select "CellDisk.mdxv" from the chosen folder case).
+
 By double-clicking on: 
-00 Ovule Master Process (Cell Ovule Growth/00 Ouvle Master Process)
-the simulation will start selecting the right template from the case chosen. 
+
+00 Ovule Master Process (Process/Model/ Cell Ovule Growth/00 Ouvle Master Process)
+the simulation will start selecting the right template from the model variant chosen. 
 
