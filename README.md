@@ -3,7 +3,7 @@ plugin for MorphoMechanX(www.MorphoMechanX.org) to generate 2D simulations of gr
 
 MorphoMechanX can be installed from package for Linux Mint 19 and Ubuntu 20.04. The package is provided at this git https://github.com/GabriellaMosca/PollenGrain_indentation (or https://zenodo.org/record/4590379#.YF3MyIBKiM8). The user should follow instructions from 1. to 4.
 
-Alternatively, MMX can be installed from source code and can be requested at: www.MorphoMechanX.org
+Alternatively, MMX can be installed from source code and can be requested at: www.MorphoMechanX.org.
 The Git revision number these models are guarantedd to run with is: 
 
 e618301477af8a0bda2c344a7312195ba5acf379
@@ -32,3 +32,5 @@ By double-clicking on:
 00 Ovule Master Process (Process/Model/ Cell Ovule Growth/00 Ouvle Master Process)
 the simulation will start selecting the right template from the model variant chosen. 
 
+For detailed instructions on how to set the model parameters and their meaning, we refer to the "Appendix 1" provided with "Hernandez-Mosca-Mendocilla et al." 
+ 
