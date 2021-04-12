@@ -1,4 +1,7 @@
 # MassSpringModels_ovuleGrowth2D
+
+[![DOI](https://zenodo.org/badge/233707711.svg)](https://zenodo.org/badge/latestdoi/233707711)
+
 plugin for MorphoMechanX(www.MorphoMechanX.org) to generate 2D simulations of growing and dividing ovules at cellular resolution based on mass-springs.
 
 To run this model on the test mesh provided, get MorphoMechanX first (you can find it here: www.morphomechanx.org). As a reference, this model is guaranteed to run against version 2.0.2-858 (git commit: 8eb2aec9055221e3e351ffe064bd059186717374)
