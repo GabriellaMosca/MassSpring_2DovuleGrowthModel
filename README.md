@@ -32,5 +32,5 @@ By double-clicking on:
 00 Ovule Master Process (Process/Model/ Cell Ovule Growth/00 Ouvle Master Process)
 the simulation will start selecting the right template from the model variant chosen. 
 
-For detailed instructions on how to set the model parameters and their meaning, we refer to the "Appendix 1" provided with "Hernandez-Mosca-Mendocilla et al." 
+For detailed instructions on how to set the model parameters and their meaning, we refer to the "Appendix 1" provided with "Hernandez-Mosca-Mendocilla et al.", also available as pre-print on BiorXiv at this link: https://www.biorxiv.org/content/10.1101/2020.07.30.226670v3.supplementary-material (as Supplemental File 1) 
  
